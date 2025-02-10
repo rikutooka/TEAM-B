@@ -8,12 +8,13 @@
 </head>
 <body>
 	<h1>管理者ログイン</h1>
-	<form action="serch" metod="GET">
+	<form action="UserLogin" metod="GET">
 		<p>ID: <input type="text" name="user_id"></p>
 		<p>パスワード: <input type="password" name="password"></p>
 		<input type="submit" value="ログイン">
 	</form>
-	<form action="account_create" method="POST">
+<!--管理者作成ページ-->
+	<form action="UserLogin" method="POST">
 	<input type="submit" value="管理者を登録する">
 	</form>
 </body>

@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>管理者の登録が完了いたしました</h1>
-<form action="">
+<form action="CreateUser" method="GET">
 <p>ID:</p>
 <p>パスワード:</p>
 <input type="submit" value="ログイン画面へ戻る">

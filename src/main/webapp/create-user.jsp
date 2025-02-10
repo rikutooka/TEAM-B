@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>新しい管理者を作成します</h1>
-<form action="">
+<form action="CreateUser" method="POST">
 <p>IDを入力してください:<input type="text" name=""></p>
 <p>パスワードを入力してください:<input type="text" name=""></p>
 <input type="submit" value="作成する">
