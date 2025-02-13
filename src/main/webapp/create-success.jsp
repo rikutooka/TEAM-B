@@ -9,8 +9,9 @@
 <body>
 <h1>管理者の登録が完了いたしました</h1>
 <form action="CreateUser" method="GET">
-<p>ID:</p>
-<p>パスワード:</p>
+<p>${message}</p>
+<p>ID: ${userID}</p>
+<p>パスワード: ${password}</p>
 <input type="submit" value="ログイン画面へ戻る">
 </form>
 </body>
