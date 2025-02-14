@@ -71,10 +71,10 @@ public class UserLoginServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException  {
-		//テスト
-		System.out.println("アカウント作成");
-		//create-user.jspへの遷移		
-		RequestDispatcher rd = request.getRequestDispatcher("create-user.jsp");
+//		//テスト
+//		System.out.println("アカウント作成");
+//		//create-user.jspへの遷移		
+		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 		rd.forward(request, response);
 	}
 }

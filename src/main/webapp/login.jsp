@@ -20,7 +20,7 @@
 		<input type="submit" value="ログイン">
 	</form>
 <!--管理者作成ページ-->
-	<form action="UserLogin" method="POST">
+	<form action="create-user.jsp">
 	<input type="submit" value="管理者を登録する">
 	</form>
 </body>
