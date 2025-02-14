@@ -26,8 +26,6 @@
             <option value="">すべて</option>
             <option value="regular">レギュラー</option>
             <option value="menthol">メンソール</option>
-            <option value="capsule">カプセル入り</option>
-            <option value=""></option>
         </select><br>
      <!-------------------- 価格帯  ----------------->
         <label>価格帯：</label>
