@@ -22,7 +22,9 @@ public class ProductDAO {
         List<ProductBean> productList = new ArrayList<>();
 
         // ① SQL文の準備
-        String sql = "SELECT id, cig_name, price, tar FROM m_product WHERE 1=1";
+        String sql = "SELECT item_id, cig_name, price, tar, nicotine, stock, category, flavor, detail FROM m_item WHERE 1=1";
+       
+
         
         if (cigName != null && !cigName.isEmpty()) {
             sql += " AND cig_name LIKE ?";
@@ -64,13 +66,19 @@ public class ProductDAO {
             // ④ whileを用いた List への格納操作
             while (res.next()) {
                 // ⑤ 取得した各カラムの値を変数に格納
-                int id = res.getInt("id");
+                int id = res.getInt("item_id");
                 String name = res.getString("cig_name");
                 int price = res.getInt("price");
-                double tar = res.getDouble("tar");
+                int tar = res.getInt("tar");
+                double nicotine = res.getDouble("nicotine");
+                int stock = res.getInt("stock");
+                String Category = res.getString("category");
+                String Flavor = res.getString("flavor");
+                String detail = res.getString("detail");
+                
 
                 // ⑥ `ProductBean` インスタンスを生成し、値をセット
-                ProductBean product = new ProductBean(id, name, price, tar);
+                ProductBean product = new ProductBean(id, name, price, tar, nicotine, stock, Category, Flavor, detail);
 
                 // ⑦ List に `Product` インスタンスを追加
                 productList.add(product);
@@ -79,6 +87,30 @@ public class ProductDAO {
 
         // ⑧ 結果を返す
         return productList;
+    }
+    public ProductBean getProductById(int id) throws ClassNotFoundException, SQLException {
+    	String sql = "SELECT item_id, cig_name, price, tar, nicotine, stock, category, flavor, detail FROM m_item WHERE item_id = ?";
+    	try (Connection con = ConnectionManager.getConnection();
+    	         PreparedStatement pstmt = con.prepareStatement(sql)) {
+    		 pstmt.setInt(1, id);
+    	        ResultSet res = pstmt.executeQuery();
+    	        if (res.next()) {
+    	            return new ProductBean(
+    	                res.getInt("item_id"),
+    	                res.getString("cig_name"),
+    	                res.getInt("price"),
+    	                res.getInt("tar"),
+    	                res.getDouble("nicotine"),
+    	                res.getInt("stock"),
+    	                res.getString("category"),
+    	                res.getString("flavor"),
+    	                res.getString("detail")
+    	            );
+    	        }
+    	    }
+    	        
+    	
+    	return null;
     }
     
     public void insertProduct(String cig_name, Double tar, Double nicotine, Integer price, String detail, Integer stock) throws SQLException, ClassNotFoundException {
@@ -108,16 +140,16 @@ public class ProductDAO {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public void deleteProduct(int id) throws SQLException, ClassNotFoundException {
+    public void deleteProduct() throws SQLException, ClassNotFoundException {
         // SQL文の準備
-        String sql = "DELETE FROM m_product WHERE id = ?";
+        String sql = "DELETE FROM m_product WHERE  = ?";
 
         // DB接続とSQLの実行
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
 
             // プレースホルダにIDをセット
-            pstmt.setInt(1, id);
+           
 
             // SQLを実行
             pstmt.executeUpdate();

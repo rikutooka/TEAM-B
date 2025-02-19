@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,50 +7,59 @@
 <title>タバコの詳細表示(管理者)</title>
 </head>
 <body>
-    <h2>詳細</h2>
-    <form action="ProductDeleteServlet" method="post">
-        <input type="hidden" name="id" value="<%= id %>">
-        
-        <table>
-           <td>銘柄：</td>
-                <td><%= cig_name %></td>
-                <td><input type="text" name="cig_name" value="<%= cig_name %>"></td>
-            </tr>
-            <tr>
-                <td>タール：</td>
-                <td><%= tar %>mg</td>
-                <td><input type="text" name="tar" value="<%= tar %>"></td>
-            </tr>
-            <tr>
-                <td>ニコチン：</td>
-                <td><%= nicotine %>mg</td>
-                <td><input type="text" name="nicotine" value="<%= nicotine %>"></td>
-            </tr>
-            <tr>
-                <td>価格：</td>
-                <td>¥<%= price %>（税込み）</td>
-                <td><input type="text" name="price" value="<%= price %>"></td>
-            </tr>
-            <tr>
-                <td>詳細：</td>
-                <td><%= detail %></td>
-                <td><input type="text" name="detail" value="<%= detail %>"></td>
-            </tr>
-            <tr>
-                <td>在庫：</td>
-                <td><%= stock %>個</td>
-                <td><input type="text" name="stock" value="<%= stock %>"></td>
-            </tr>
-           
-        </table>
-        
-        <button type="submit">更新</button>
-        
-    </form>
-    
-    <form action="productListMaster.jsp">
-        <button type="submit">TOP</button>
-    </form>
+	<%@ page import="java.util.List"%>
+	<%@ page import="model.entity.ProductBean"%>
+
+	<h2>詳細</h2>
+	<%
+	// リクエストスコープから productList を取得
+	ProductBean product = (ProductBean) request.getAttribute("product");
+
+	// リストがnullでないかチェック
+	if (product != null) {
+	%>
+	<form action="ProductDelete" method="post">
+		<input type="hidden" name="id" value="<%=product.getId()%>">
+
+
+		<p>銘柄：</p>
+		<p><%=product.getCigName()%>
+			<input type="text" name="cig_name">
+		</p>
+
+		<p>タール：</p>
+		<p><%=product.getTar()%>mg <input type="text" name="tar">
+		</p>
+
+		<p>ニコチン：</p>
+		<p><%=product.getNicotine()%>mg <input type="text" name="nicotine">
+		</p>
+
+		<p>価格：</p>
+		<p>
+			¥<%=product.getPrice()%>（税込み) <input type="text" name="price">
+		</p>
+
+		<p>詳細:</p>
+		<p><%=product.getDetail()%>
+			<input type="text" name="detail">
+		</p>
+
+		<p>在庫:</p>
+		<p><%=product.getStock()%>個 <input type="text" name="stock">
+		</p>
+		<button type="submit">更新</button>
+	</form>
+	<%
+	} else {
+	%>
+	<p>商品が見つかりませんでした。</p>
+	<%
+	}
+	%>
+	<form action="search.jsp">
+		<button type="submit">TOP</button>
+	</form>
 
 </body>
 </html>

@@ -32,6 +32,7 @@ public class SearchServlet extends HttpServlet {
         
         try {
             productList = dao.getProductList(cigName, category, priceMin, priceMax, flavor);
+           
         } catch (ClassNotFoundException | SQLException e) {
             throw new ServletException("Database error occurred",e);
         }
@@ -47,7 +48,7 @@ public class SearchServlet extends HttpServlet {
         try {
             return (str == null || str.isEmpty()) ? null : Integer.parseInt(str);
         } catch (NumberFormatException e) {
-            System.err.println("NumberFormatException: " + e.getMessage());
+            
             return null;
         }
     }

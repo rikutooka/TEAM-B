@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
         String formAction = isAdminLoggedIn ? "productList.jsp" : "	productListMaster.jsp";
     %>
     
-    <form action="<%= formAction %>" method="get">
+    <form action="SearchServlet" method="get">
     <!--------------------- 銘柄 --------------------->
         <label>銘柄：</label>
         <input type="text" name="cig_name"><br>
@@ -24,7 +25,7 @@
         <label>カテゴリー：</label>
         <select name="category">
             <option value="">すべて</option>
-            <option value="regular">レギュラー</option>
+            <option value="レギュラー">レギュラー</option>
             <option value="menthol">メンソール</option>
         </select><br>
      <!-------------------- 価格帯  ----------------->
