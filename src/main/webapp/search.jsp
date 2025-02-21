@@ -46,13 +46,13 @@
             <input type="submit" value="検索">
             
             <% if (isAdminLoggedIn) { %>
-                <a href="create-user.jsp">
+                <a href="RegisterServlet">
                     <button type="button">新規登録</button>
                 </a>
             <% } %>
        
     </form>
-    
+    <br>
     <% if (!isAdminLoggedIn) { %>
         <div class="right-bottom">
             <a href="login.jsp">
@@ -60,6 +60,14 @@
             </a>
         </div>
     <% } %>
-
+<%
+    if (session != null && session.getAttribute("adminUser") != null) {
+%>
+    <form action="LogoutServlet" method="post">
+        <input type="submit" value="ログアウト">
+    </form>
+<%
+    }
+%>
 </body>
 </html>

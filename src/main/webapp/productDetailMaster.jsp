@@ -18,7 +18,7 @@
 	// リストがnullでないかチェック
 	if (product != null) {
 	%>
-	<form action="ProductDelete" method="post">
+	<form action="ProductDetail" method="post">
 		<input type="hidden" name="id" value="<%=product.getId()%>">
 
 

@@ -112,6 +112,28 @@ public class ProductDAO {
     	
     	return null;
     }
+        public boolean updateProduct(int id, String cigName, int tar, double nicotine, int price, String detail, int stock) {
+            String sql = "UPDATE m_item SET cig_name=?, tar=?, nicotine=?, price=?, detail=?, stock=? WHERE item_id=?";
+
+            try (Connection con = ConnectionManager.getConnection();
+                 PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+                pstmt.setString(1, cigName);
+                pstmt.setInt(2, tar);
+                pstmt.setDouble(3, nicotine);
+                pstmt.setInt(4, price);
+                pstmt.setString(5, detail);
+                pstmt.setInt(6, stock);
+                pstmt.setInt(7, id);
+
+                int result = pstmt.executeUpdate();
+                return result > 0; // 1以上なら成功
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    
     
     public void insertProduct(String cig_name, Double tar, Double nicotine, Integer price, String detail, Integer stock) throws SQLException, ClassNotFoundException {
         // SQL文の準備

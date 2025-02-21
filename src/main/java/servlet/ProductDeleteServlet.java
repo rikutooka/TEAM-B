@@ -31,7 +31,6 @@ public class ProductDeleteServlet extends HttpServlet {
 				e.printStackTrace();
 			}
         }
-
         response.sendRedirect("productListMaster.jsp"); // 一覧ページをリロード
     }
 }
