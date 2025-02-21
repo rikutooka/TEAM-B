@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.dao.ProductDAO;
 import model.entity.ProductBean;
@@ -28,20 +29,38 @@ public class SearchServlet extends HttpServlet {
 
         // DAOを利用して検索
         ProductDAO dao = new ProductDAO();
-        List<ProductBean> productList;
+        List<ProductBean> productList = null;
         
         try {
             productList = dao.getProductList(cigName, category, priceMin, priceMax, flavor);
-           
+            
+            if (productList == null) {
+                productList = List.of(); // 空のリストを設定
+            }
+            
+            System.out.println("検索結果件数: " + productList.size());
+            
         } catch (ClassNotFoundException | SQLException e) {
+        	e.printStackTrace();
             throw new ServletException("Database error occurred",e);
         }
+        
+        System.out.println("取得した商品リスト: " + productList);
 
         // 検索結果をリクエストスコープに格納
         request.setAttribute("productList", productList);
+        
+        // セッションを取得し、管理者ログイン状態をチェック
+        HttpSession session = request.getSession(false);
+        boolean isAdminLoggedIn = (session != null && session.getAttribute("adminUser") != null);
+        
+        //追加消したとこ
 
-        // 一覧画面へフォワード
-        RequestDispatcher dispatcher = request.getRequestDispatcher("productListMaster.jsp");
+        // 遷移先を決定
+        String destination = isAdminLoggedIn ? "productListMaster.jsp" : "productList.jsp";
+
+        // 一覧画面へ遷移
+        RequestDispatcher dispatcher = request.getRequestDispatcher(destination);
         dispatcher.forward(request, response);
     }
     private Integer parseInteger(String str) {

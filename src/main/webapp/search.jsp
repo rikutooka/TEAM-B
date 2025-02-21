@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+     <%
+       // セッション情報の出力
+       System.out.println("Session adminUser: " + session.getAttribute("adminUser"));
+
+       Boolean isAdminLoggedIn = false;
+       if (session != null && session.getAttribute("adminUser") != null) {
+           isAdminLoggedIn = true;
+       }
+     %>
+    
 
 <!DOCTYPE html>
 <html>
@@ -10,12 +21,7 @@
 <body>
     <h1>タバコ検索画面</h1>
     
-    <%
-        //ログイン状態のチェック
-        HttpSession sessionObj = request.getSession(false);
-        boolean isAdminLoggedIn = (sessionObj != null && sessionObj.getAttribute("adminUser") != null);
-        String formAction = isAdminLoggedIn ? "productList.jsp" : "	productListMaster.jsp";
-    %>
+    
     
     <form action="SearchServlet" method="get">
     <!--------------------- 銘柄 --------------------->
@@ -24,9 +30,9 @@
     <!------------------- カテゴリー  ---------------->
         <label>カテゴリー：</label>
         <select name="category">
-            <option value="">すべて</option>
-            <option value="レギュラー">レギュラー</option>
-            <option value="menthol">メンソール</option>
+            <option value="">選択してください</option>
+            <option value="紙巻たばこ">紙巻たばこ</option>
+            <option value=""></option>
         </select><br>
      <!-------------------- 価格帯  ----------------->
         <label>価格帯：</label>
@@ -36,10 +42,9 @@
         <label>フレーバー：</label>
         <select name="flavor">
             <option value="">選択してください</option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
+            <option value="レギュラー">レギュラー</option>
+            <option value="メンソール">メンソール</option>
+            <option value="フルーツ">フルーツ</option>
         </select><br>
         
         
@@ -49,9 +54,14 @@
                 <a href="create-user.jsp">
                     <button type="button">新規登録</button>
                 </a>
+                
+                <form action="LogoutServlet" method="post" style="display: inline;">
+                   <button type="submit">ログアウト</button>
+                </form>
             <% } %>
        
     </form>
+    
     
     <% if (!isAdminLoggedIn) { %>
         <div class="right-bottom">
@@ -60,6 +70,7 @@
             </a>
         </div>
     <% } %>
+
 
 </body>
 </html>

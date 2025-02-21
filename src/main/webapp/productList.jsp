@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.List"%>
+<%@ page import="model.entity.ProductBean"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +9,8 @@
 <title>結果一覧</title>
 </head>
 <body>
+    <%@ page import="java.util.List"%>
+	<%@ page import="model.entity.ProductBean"%>
     <h2 style="text-align:center;">結果一覧</h2>
     
     <table border="1">
@@ -16,15 +20,30 @@
             <th>タール</th>
             <th>詳細</th>
         </tr>
-        <c:forEach var="product" items="${productList}">
+        
+        <%  //リクエストスコープから productList を取得
+            List<ProductBean> productList = (List<ProductBean>) request.getAttribute("productList");
+            if (productList != null && !productList.isEmpty()) {
+                for (ProductBean product : productList) {
+        %>
             <tr>
-                <td>${product.cigName}</td>
-                <td>¥${product.price} (税込み)</td>
-                <td>${product.tar}mg</td>
-                <td><a href="productDetail.jsp?id=${product.id}">詳細</a></td>
+                <td><%= product.getCigName() %></td>
+                <td>¥<%= product.getPrice() %>(税込み)</td>
+                <td><%= product.getTar() %>mg</td>
+                <td><a href="ProductDetail?id=<%= product.getId() %>">詳細</a></td>
             </tr>
-        </c:forEach>
+        <% 
+                }
+            } else { 
+        %>
+            <!-- 検索結果が空の場合のメッセージ -->
+            <p style="text-align:center; color:red;">該当する商品が見つかりませんでした。</p>
+        <% 
+            }
+        %>
+        
         </table>
+        
         <form action="search.jsp" method="get">
             <button type="submit">TOP</button>
         </form>

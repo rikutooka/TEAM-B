@@ -20,31 +20,43 @@ public class ProductDetailServlet  extends HttpServlet {
 	 */
 	public ProductDetailServlet() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	 protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			 throws ServletException, IOException {
+		 
+		 response.setContentType("text/html; charset=UTF-8");
+		 response.setCharacterEncoding("UTF-8");
+
 		 // クエリパラメータから商品IDを取得
 	        String idStr = request.getParameter("id");
 	        
-	        int itemId = Integer.parseInt(idStr);
+	        if (idStr != null) {
+	            try {
+	                int itemId = Integer.parseInt(idStr);
 
-	        // DAOを使ってデータベースから商品情報を取得
-	        ProductDAO productDAO = new ProductDAO();
-	        ProductBean product = null;
-	        
-	        try {
-	            product = productDAO.getProductById(itemId); // 商品IDで検索
-	        } catch (Exception e) {
-	            e.printStackTrace();
+	                // DAOを使ってデータベースから商品情報を取得
+	                ProductDAO productDAO = new ProductDAO();
+	                ProductBean product = productDAO.getProductById(itemId);
+
+	                // 取得した商品情報をリクエストスコープに保存
+	                request.setAttribute("product", product);
+
+	                // 詳細ページにフォワード
+	                RequestDispatcher dispatcher = request.getRequestDispatcher("productDetail.jsp");
+	                dispatcher.forward(request, response);
+	            } catch (NumberFormatException e) {
+	                // IDの形式が不正な場合のエラーハンドリング
+	                e.printStackTrace();
+	                response.sendRedirect("productList.jsp");
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	                response.sendRedirect("productList.jsp");
+	            }
+	        } else {
+	            response.sendRedirect("productList.jsp");
 	        }
-	        // 取得した商品情報をリクエストスコープに保存
-	        request.setAttribute("product", product);
-		 
-	            RequestDispatcher dispatcher = request.getRequestDispatcher("productDetailMaster.jsp");
-	            dispatcher.forward(request, response);
-	 }
-}
+	    }
+	}

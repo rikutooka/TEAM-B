@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.dao.UserDAO;
 import model.entity.UserBean;
@@ -49,11 +50,16 @@ public class UserLoginServlet extends HttpServlet {
 					rd.forward(request, response);
 			 }else {
 	                // ユーザー情報が取得できた場合、リクエストにユーザー情報をセット
-	                request.setAttribute("userInfoList", userInfoList);
+				    HttpSession session = request.getSession(); 
+				    session.setAttribute("adminUser", userInfoList.get(0));
+				    
 
 	                // search.jspに遷移
-	                RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
-	                rd.forward(request, response);
+	                //RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
+	                //rd.forward(request, response);
+				    
+				    //検索画面にリダイレクト
+				    response.sendRedirect("search.jsp");
 	            }
 		}
 		catch (ClassNotFoundException | SQLException e) {

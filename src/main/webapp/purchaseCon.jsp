@@ -21,6 +21,14 @@
     </table>
     
     <form action="purchaseComplete" method="post">
+        <input type="hidden" name="cigName" value="${requestScope.cigName}">
+        <input type="hidden" name="quantity" value="${requestScope.quantity}">
+        <input type="hidden" name="totalPrice" value="${requestScope.totalPrice}">
+        <input type="hidden" name="name" value="${requestScope.name}">
+        <input type="hidden" name="postCode" value="${requestScope.postCode}">
+        <input type="hidden" name="address" value="${requestScope.address}">
+        <input type="hidden" name="telNumber" value="${requestScope.telNumber}">
+        <input type="hidden" name="payMethod" value="${requestScope.payMethod}">
         <input type="submit" value="購入">
     </form>
 

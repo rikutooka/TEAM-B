@@ -18,16 +18,17 @@ function updateTotalPrice() {
     <h2>購入者情報入力</h2>
     
     <%
+        request.setCharacterEncoding("UTF-8");
         String cigName = request.getParameter("cig_name");
         String price = request.getParameter("price");
         String stock = request.getParameter("stock");
     %>
     
-    <form action="PurchaseConServlet" method="post">
+    <form action="purchaseCon" method="post">
         <table>
             <tr>
                 <td>商品：</td>
-                <td><input type="text" name="cig_Name" required></td>
+                <td><input type="text" name="cig_Name" value="<%= cigName %>" readonly></td>
             </tr>
             <tr>
                 <td>個数：</td>
@@ -47,7 +48,7 @@ function updateTotalPrice() {
             </tr>
             <tr>
                 <td>郵便番号：</td>
-                <td><input type="number" name="post_code" required></td>
+                <td><input type="text" name="post_code" required></td>
             </tr>
             <tr>
                 <td>住所：</td>
@@ -55,7 +56,7 @@ function updateTotalPrice() {
             </tr>
             <tr>
                 <td>電話番号：</td>
-                <td><input type="number" name="tel_number" required></td>
+                <td><input type="text" name="tel_number" required></td>
             </tr>
             <tr>
                 <td>決済方法：</td>

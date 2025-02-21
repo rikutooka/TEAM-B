@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.dao.ProductDAO;
 
-@WebServlet("/ProductDeleteServlet")
+@WebServlet("/ProductDelete")
 public class ProductDeleteServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -19,15 +19,13 @@ public class ProductDeleteServlet extends HttpServlet {
         String idStr = request.getParameter("id");
 
         if (idStr != null && !idStr.isEmpty()) {
-            int id = Integer.parseInt(idStr);
-            ProductDAO dao = new ProductDAO();
             try {
+            	int id = Integer.parseInt(idStr);
+            	ProductDAO dao = new ProductDAO();
 				dao.deleteProduct(id);
 			} catch (ClassNotFoundException e) {
-				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			} catch (SQLException e) {
-				// TODO 自動生成された catch ブロック
 				e.printStackTrace();
 			}
         }
