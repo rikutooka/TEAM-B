@@ -11,16 +11,16 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet("/LogoutServlet")
 public class LogoutServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false); // 既存のセッションを取得（なければnull）
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // 既存のセッションを取得（存在する場合）
+        HttpSession session = request.getSession(false);
         if (session != null) {
-        	System.out.println("ログアウト処理: セッション無効化前 - adminUser: " + session.getAttribute("adminUser"));
-            session.invalidate(); // セッションを無効化（ログアウト）
-            System.out.println("ログアウト処理: セッション無効化後");
-        }else {
-            System.out.println("ログアウト処理: 既にセッションなし");
+            // セッションを無効化
+            session.invalidate();
         }
-        
-        response.sendRedirect("search.jsp"); // ログアウト後に search.jsp に戻る
+        // ログインページへリダイレクト
+        response.sendRedirect("search.jsp");
     }
 }
