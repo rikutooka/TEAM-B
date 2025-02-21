@@ -43,7 +43,6 @@ public class RegisterServlet extends HttpServlet {
         try {
             return (str == null || str.isEmpty()) ? null : Double.parseDouble(str);
         } catch (NumberFormatException e) {
-            System.err.println("NumberFormatException: " + e.getMessage());
             return null;
         }
     }
