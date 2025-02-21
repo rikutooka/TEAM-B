@@ -137,7 +137,8 @@ public class ProductDAO {
     
     public void insertProduct(String cig_name, Double tar, Double nicotine, Integer price, String detail, Integer stock) throws SQLException, ClassNotFoundException {
         // SQL文の準備
-        String sql = "INSERT INTO m_product (cig_name, tar, nicotine, price, detail, stock) VALUES (?, ?, ?, ?, ?, ?)";
+    	String sql = "INSERT INTO m_item (cig_name, tar, nicotine, price, detail, stock) VALUES (?, ?, ?, ?, ?, ?)";
+
 
         // DB接続とSQLの実行準備
         try (Connection con = ConnectionManager.getConnection();
@@ -164,7 +165,7 @@ public class ProductDAO {
      */
     public void deleteProduct() throws SQLException, ClassNotFoundException {
         // SQL文の準備
-        String sql = "DELETE FROM m_product WHERE  = ?";
+    	String sql = "DELETE FROM m_item WHERE item_id = ?";
 
         // DB接続とSQLの実行
         try (Connection con = ConnectionManager.getConnection();
@@ -177,5 +178,24 @@ public class ProductDAO {
             pstmt.executeUpdate();
         }
     }
-
+    /**
+     * フレーバー一覧を取得するメソッド
+     * @return List<String> フレーバー名のリスト
+     */
+    public List<String> getAllFlavors() {
+    	 List<String> flavors = new ArrayList<>();
+    	 String sql = "SELECT flavor FROM m_item";
+    	 try (Connection con = ConnectionManager.getConnection();
+                 PreparedStatement pstmt = con.prepareStatement(sql);
+                 ResultSet res = pstmt.executeQuery()) {
+    		 while (res.next()) {
+                 flavors.add(res.getString("flavor"));
+             }
+         } catch (ClassNotFoundException | SQLException e) {
+             e.printStackTrace();
+         
+    	 }
+    	return flavors;
+    	
+    }
 }

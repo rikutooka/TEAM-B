@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ page import="model.dao.ProductDAO" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +16,8 @@
         HttpSession sessionObj = request.getSession(false);
         boolean isAdminLoggedIn = (sessionObj != null && sessionObj.getAttribute("adminUser") != null);
         String formAction = isAdminLoggedIn ? "productList.jsp" : "	productListMaster.jsp";
+        ProductDAO productDAO = new ProductDAO();
+        List<String> flavorList = productDAO.getAllFlavors();
     %>
     
     <form action="SearchServlet" method="get">
@@ -26,7 +29,7 @@
         <select name="category">
             <option value="">すべて</option>
             <option value="レギュラー">レギュラー</option>
-            <option value="menthol">メンソール</option>
+            <option value="メンソール">メンソール</option>
         </select><br>
      <!-------------------- 価格帯  ----------------->
         <label>価格帯：</label>
@@ -36,10 +39,9 @@
         <label>フレーバー：</label>
         <select name="flavor">
             <option value="">選択してください</option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
+            <% for(String flavor : flavorList) { %>
+                <option value="<%= flavor %>"><%= flavor %></option>
+            <% } %>
         </select><br>
         
         

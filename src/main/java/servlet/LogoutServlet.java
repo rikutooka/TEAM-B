@@ -14,13 +14,13 @@ public class LogoutServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 既存のセッションを取得（存在する場合）
+		// セッションを取得
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			// セッションを無効化
 			session.invalidate();
 		}
-		// ログインページへリダイレクト
+		//サーチページへリダイレクト
 		response.sendRedirect("search.jsp");
 	}
 }
