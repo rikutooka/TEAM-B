@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.dao.ProductDAO;
 import model.entity.ProductBean;
@@ -16,42 +17,41 @@ import model.entity.ProductBean;
 public class ProductDetailServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    public ProductDetailServlet() {
-        super();
-    }
-
     @Override
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // クエリパラメータから商品IDを取得
         String idStr = request.getParameter("id");
+        
+        int itemId = Integer.parseInt(idStr);
 
-        if (idStr != null) {
-            try {
-                int itemId = Integer.parseInt(idStr);
+        // DAOを使ってデータベースから商品情報を取得
+        ProductDAO productDAO = new ProductDAO();
+        ProductBean product = null;
 
-                // DAOを使ってデータベースから商品情報を取得
-                ProductDAO productDAO = new ProductDAO();
-                ProductBean product = productDAO.getProductById(itemId);
-
-                // 取得した商品情報をリクエストスコープに保存
-                request.setAttribute("product", product);
-
-                // 詳細ページにフォワード
-                RequestDispatcher dispatcher = request.getRequestDispatcher("productDetail.jsp");
-                dispatcher.forward(request, response);
-            } catch (NumberFormatException e) {
-                // IDの形式が不正な場合のエラーハンドリング
-                e.printStackTrace();
-                response.sendRedirect("productList.jsp");
-            } catch (Exception e) {
-                e.printStackTrace();
-                response.sendRedirect("productList.jsp");
-            }
-        } else {
-            response.sendRedirect("productList.jsp");
+        try {
+            product = productDAO.getProductById(itemId); // 商品IDで検索
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        // 取得した商品情報をリクエストスコープに保存
+        request.setAttribute("product", product);
+
+     // セッションを取得し、ログイン状態を確認
+        HttpSession session = request.getSession(false);
+        boolean isAdminLoggedIn = (session != null && session.getAttribute("adminUser") != null);
+
+        // ログイン状態に応じて遷移先を決定
+        String destination = isAdminLoggedIn ? "productDetailMaster.jsp" : "productDetail.jsp";
+
+        // 遷移先のページにフォワード
+        RequestDispatcher dispatcher = request.getRequestDispatcher(destination);
+        dispatcher.forward(request, response);
     }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

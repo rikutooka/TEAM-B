@@ -19,10 +19,6 @@ import model.entity.UserBean;
 public class UserLoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    public UserLoginServlet() {
-        super();
-    }
-
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -65,7 +61,7 @@ public class UserLoginServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // リクエストディスパッチャーを使ってlogin.jspに遷移
+        // POSTリクエストの場合でもlogin.jspに遷移させる
         RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
         rd.forward(request, response);
     }

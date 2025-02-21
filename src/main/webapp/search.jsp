@@ -4,10 +4,7 @@
     // セッション情報の出力
     System.out.println("Session adminUser: " + session.getAttribute("adminUser"));
 
-    Boolean isAdminLoggedIn = false;
-    if (session != null && session.getAttribute("adminUser") != null) {
-        isAdminLoggedIn = true;
-    }
+    Boolean isAdminLoggedIn = (session != null && session.getAttribute("adminUser") != null);
 %>
 
 <!DOCTYPE html>
@@ -47,25 +44,25 @@
         </select><br>
 
         <input type="submit" value="検索">
-
-        <% if (isAdminLoggedIn) { %>
-            <!-- 管理者ログイン後の場合、新規登録ボタンとログアウトボタンを表示 -->
-            <a href="RegisterServlet">
-                <button type="button">新規登録</button>
-            </a>
-
-            <form action="LogoutServlet" method="post" style="display: inline;">
-                <button type="submit">ログアウト</button>
-            </form>
-        <% } else { %>
-            <!-- 管理者ログインしていない場合、ログインボタンを表示 -->
-            <div class="right-bottom">
-                <a href="login.jsp">
-                    <button type="button">管理者ログイン</button>
-                </a>
-            </div>
-        <% } %>
-
     </form>
+
+    <% if (isAdminLoggedIn) { %>
+        <!-- 管理者ログイン後の場合、新規登録ボタンとログアウトボタンを表示 -->
+        <a href="productRegister.jsp">
+            <button type="button">新規登録</button>
+        </a>
+
+        <form action="LogoutServlet" method="post" style="display: inline;">
+            <input type="submit" value="ログアウト">
+        </form>
+    <% } else { %>
+        <!-- 管理者ログインしていない場合、ログインボタンを表示 -->
+        <div class="right-bottom">
+            <a href="login.jsp">
+                <button type="button">管理者ログイン</button>
+            </a>
+        </div>
+    <% } %>
+
 </body>
 </html>
