@@ -163,16 +163,16 @@ public class ProductDAO {
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public void deleteProduct() throws SQLException, ClassNotFoundException {
+    public void deleteProduct(int id) throws SQLException, ClassNotFoundException {
         // SQL文の準備
-    	String sql = "DELETE FROM m_item WHERE item_id = ?";
+        String sql = "DELETE FROM m_item WHERE item_id = ?";
 
         // DB接続とSQLの実行
         try (Connection con = ConnectionManager.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
 
             // プレースホルダにIDをセット
-           
+        	pstmt.setInt(1, id);
 
             // SQLを実行
             pstmt.executeUpdate();

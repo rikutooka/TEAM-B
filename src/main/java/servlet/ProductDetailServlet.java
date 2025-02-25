@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.dao.ProductDAO;
 import model.entity.ProductBean;
@@ -45,8 +46,14 @@ public class ProductDetailServlet extends HttpServlet {
 		}
 		// 取得した商品情報をリクエストスコープに保存
 		request.setAttribute("product", product);
+		// セッションを取得し、ログイン状態を確認
+        HttpSession session = request.getSession(false);
+        boolean isAdminLoggedIn = (session != null && session.getAttribute("adminUser") != null);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("productDetailMaster.jsp");
+        // ログイン状態に応じて遷移先を決定
+        String destination = isAdminLoggedIn ? "productDetailMaster.jsp" : "productDetail.jsp";
+        // 遷移先のページにフォワード
+		RequestDispatcher dispatcher = request.getRequestDispatcher(destination);
 		dispatcher.forward(request, response);
 	}
 

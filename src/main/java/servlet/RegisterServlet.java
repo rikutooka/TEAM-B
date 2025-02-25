@@ -15,6 +15,7 @@ import model.dao.ProductDAO;
 public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	request.setCharacterEncoding("UTF-8");
         // 入力値取得
         String cig_name = request.getParameter("cig_name");
         Double tar = parseDouble(request.getParameter("tar"));
@@ -27,13 +28,13 @@ public class RegisterServlet extends HttpServlet {
         ProductDAO dao = new ProductDAO();
         try {
 			dao.insertProduct(cig_name, tar, nicotine, price, detail, stock);
+			// 成功したらリスト画面へリダイレクト
+            response.sendRedirect("productListMaster.jsp");
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-			// エラーメッセージ
-			request.setAttribute("errorMessage", "登録に失敗しました。もう一度試してください。");
-			
-        // 一覧画面にリダイレクト
-        response.sendRedirect("productListMaster.jsp");
+			 // エラーメッセージを設定して登録画面に戻る
+            request.setAttribute("errorMessage", "登録に失敗しました。もう一度試してください。");
+            request.getRequestDispatcher("search.jsp").forward(request, response);
 		}
     }
         private Double parseDouble(String str) {
