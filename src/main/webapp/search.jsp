@@ -27,6 +27,7 @@
 		<label>カテゴリー：</label> <select name="category">
 			<option value="">選択してください</option>
 			<option value="紙巻たばこ">紙巻たばこ</option>
+			<option value="電子たばこ">電子たばこ</option>
 
 		</select><br>
 

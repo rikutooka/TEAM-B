@@ -20,7 +20,7 @@ public class UserLoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // エンコーディング設定
         request.setCharacterEncoding("UTF-8");
@@ -59,7 +59,7 @@ public class UserLoginServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // POSTリクエストの場合でもlogin.jspに遷移させる
         RequestDispatcher rd = request.getRequestDispatcher("login.jsp");

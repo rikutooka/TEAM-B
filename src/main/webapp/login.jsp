@@ -14,7 +14,7 @@
 	<h1>管理者ログイン</h1>
 	<!-- エラーメッセージの表示（requestオブジェクトを直接使用） -->
     <%= request.getAttribute("errorMessage") != null ? "<div class='error'>" + request.getAttribute("errorMessage") + "</div>" : "" %>
-	<form action="UserLogin" method="GET">
+	<form action="UserLogin" method="POST">
 		<p>ID: <input type="text" name="user_id"></p>
 		<p>パスワード: <input type="password" name="password"></p>
 		<input type="submit" value="ログイン">
