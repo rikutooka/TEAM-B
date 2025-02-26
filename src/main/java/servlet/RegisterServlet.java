@@ -27,6 +27,7 @@ public class RegisterServlet extends HttpServlet {
         // DAOを利用してDBに登録
         ProductDAO dao = new ProductDAO();
         try {
+
 			dao.insertProduct(cig_name, tar, nicotine, price, detail, stock);
 			// 成功したらリスト画面へリダイレクト
             response.sendRedirect("productListMaster.jsp");
@@ -36,22 +37,26 @@ public class RegisterServlet extends HttpServlet {
             request.setAttribute("errorMessage", "登録に失敗しました。もう一度試してください。");
             request.getRequestDispatcher("search.jsp").forward(request, response);
 		}
+
     }
-        private Double parseDouble(String str) {
-            try {
-                return (str == null || str.isEmpty()) ? null : Double.parseDouble(str);
-            } catch (NumberFormatException e) {
-            	
-                return null;
-            }
-        }
 
-        private Integer parseInteger(String str) {
-            try {
-                return (str.isEmpty()) ? null : Integer.parseInt(str);
-            } catch (NumberFormatException e) {
-                return null;
-            }
-        }
+    // 小数のパース (エラーハンドリングを強化)
+    private Double parseDouble(String str) {
+        try {
+            return (str == null || str.isEmpty()) ? null : Double.parseDouble(str);
+        } catch (NumberFormatException e) {
+            return null;
 
+        }
+    }
+
+    // 整数のパース (nullチェックを強化)
+    private Integer parseInteger(String str) {
+        try {
+            return (str == null || str.isEmpty()) ? null : Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            System.err.println("NumberFormatException: " + e.getMessage());
+            return null;
+        }
+    }
 }

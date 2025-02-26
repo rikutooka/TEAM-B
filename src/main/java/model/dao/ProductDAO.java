@@ -137,7 +137,8 @@ public class ProductDAO {
     
     public void insertProduct(String cig_name, Double tar, Double nicotine, Integer price, String detail, Integer stock) throws SQLException, ClassNotFoundException {
         // SQL文の準備
-    	String sql = "INSERT INTO m_item (cig_name, tar, nicotine, price, detail, stock) VALUES (?, ?, ?, ?, ?, ?)";
+
+        String sql = "INSERT INTO m_item (cig_name, tar, nicotine, price, detail, stock) VALUES (?, ?, ?, ?, ?, ?)";
 
 
         // DB接続とSQLの実行準備

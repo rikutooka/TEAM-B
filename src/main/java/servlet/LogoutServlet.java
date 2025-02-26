@@ -23,4 +23,5 @@ public class LogoutServlet extends HttpServlet {
 		//サーチページへリダイレクト
 		response.sendRedirect("search.jsp");
 	}
+   
 }
