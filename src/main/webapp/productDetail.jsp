@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="model.entity.ProductBean" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,31 +10,36 @@
 <body>
 <h1>タバコの詳細表示</h1>
 
-<%-- データベースから取得した商品情報の表示 --%>
+<%-- データベースから商品情報を取得 --%>
 <%
-    String cigName = request.getParameter("cig_name"); // 銘柄
-    String tar = request.getParameter("tar"); // タール
-    String nicotine = request.getParameter("nicotine"); // ニコチン
-    String price = request.getParameter("price"); // 価格
-    String stock = request.getParameter("stock"); // 在庫
+   ProductBean product = (ProductBean) request.getAttribute("product");
+   if (product != null) {
 %>
 
-<p>銘柄: <%= cigName %></p>
-<p>タール: <%= tar %> mg</p>
-<p>ニコチン: <%= nicotine %> mg</p>
-<p>価格: <%= price %> 円</p>
-<p>在庫: <%= stock %> 個</p>
+<p>銘柄: <%= product.getCigName() %></p>
+<p>タール: <%= product.getTar() %> mg</p>
+<p>ニコチン: <%= product.getNicotine() %> mg</p>
+<p>価格: <%= product.getPrice() %> 円</p>
+<p>在庫: <%= product.getStock() %> 個</p>
+<p>詳細: <%= product.getDetail() %></p>
 
 <form action="purchaseForm.jsp" method="post">
-    <input type="hidden" name="cig_name" value="<%= cigName %>">
-    <input type="hidden" name="price" value="<%= price %>">
-    <input type="hidden" name="stock" value="<%= stock %>">
+    <input type="hidden" name="cig_name" value="<%= product.getCigName() %>">
+    <input type="hidden" name="price" value="<%= product.getPrice() %>">
+    <input type="hidden" name="stock" value="<%= product.getStock() %>">
     <input type="submit" value="購入">
 </form>
 
 <form action="productList.jsp" method="post">
     <input type="submit" value="TOP">
 </form>
+<%
+    } else {
+%>
+        <p>商品情報が見つかりませんでした。</p>
+<%
+    }
+%>
 
 </body>
 </html>

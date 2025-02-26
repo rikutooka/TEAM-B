@@ -10,6 +10,7 @@
 <body>
 	<%@ page import="java.util.List"%>
 	<%@ page import="model.entity.ProductBean"%>
+    
 	<h2 style="text-align: center;">結果一覧</h2>
 
 	<table border="1">
@@ -41,7 +42,7 @@
 				</form>
 			</td>
 			<td>
-				<form action="ProductDetail" method="post">
+				<form action="ProductDelete" method="post">
 					<input type="hidden" name="id" value="<%=product.getId()%>">
 					<button type="submit">削除</button>
 				</form>

@@ -11,7 +11,7 @@ import model.entity.ProductBean;
 
 public class ProductDAO {
     /**
-     * m_product の全レコードから銘柄・価格・タールを取得し、List に格納して返すメソッド
+     * m_item の全レコードから銘柄・価格・タールを取得し、List に格納して返すメソッド
      * @return 商品情報が入った List
      * @throws SQLException 
      * @throws ClassNotFoundException 

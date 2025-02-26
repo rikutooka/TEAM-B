@@ -17,70 +17,52 @@ import model.entity.UserBean;
 
 @WebServlet("/UserLogin")
 public class UserLoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public UserLoginServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // エンコーディング設定
+        request.setCharacterEncoding("UTF-8");
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException  {
-		//エンコーディング設定
-				request.setCharacterEncoding("UTF-8");
-				
-		String user_id = request.getParameter("user_id");
-		String password = request.getParameter("password");
-		//①DAOのインスタンス生成
-		UserDAO userDAO = new UserDAO();
-		try {
-			 List<UserBean> userInfoList = userDAO.getUserInfoList(user_id, password);
-			 
-			 if(userInfoList.isEmpty()) {
-				// ユーザー情報が取得できない場合、エラーメッセージをセット
-				 String errorMessage = "ユーザーIDまたはパスワードが間違っています。";
-				 request.setAttribute("errorMessage", errorMessage);
-				 RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-					rd.forward(request, response);
-			 }else {
-				 // 認証成功時：セッションの取得（なければ新規作成）
-				    HttpSession session = request.getSession();
-				    // ユーザー情報をセッションに保存
-				    session.setAttribute("adminUser", userInfoList);
-				 
-				    // ユーザー情報が取得できた場合、リクエストにユーザー情報をセット
-	                request.setAttribute("userInfoList", userInfoList);
+        String user_id = request.getParameter("user_id");
+        String password = request.getParameter("password");
 
-	                // search.jspに遷移
-	                RequestDispatcher rd = request.getRequestDispatcher("search.jsp");
-	                rd.forward(request, response);
-	            }
-		}
-		catch (ClassNotFoundException | SQLException e) {
-			 // エラーハンドリング
+        // DAOのインスタンス生成
+        UserDAO userDAO = new UserDAO();
+        try {
+            List<UserBean> userInfoList = userDAO.getUserInfoList(user_id, password);
+
+            if (userInfoList.isEmpty()) {
+                // ユーザー情報が取得できない場合、エラーメッセージをセット
+                String errorMessage = "ユーザーIDまたはパスワードが間違っています。";
+                request.setAttribute("errorMessage", errorMessage);
+                RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+                rd.forward(request, response);
+            } else {
+                // 認証成功時：セッションの取得（なければ新規作成）
+                HttpSession session = request.getSession();
+                // ユーザー情報リスト全体をセッションに保存
+                session.setAttribute("adminUser", userInfoList);
+
+                // 検索画面にリダイレクト
+                response.sendRedirect("search.jsp");
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            // エラーハンドリング
             e.printStackTrace();
             String errorMessage = "データベースに接続できませんでした。";
-			 request.setAttribute("errorMessage", errorMessage);
+            request.setAttribute("errorMessage", errorMessage);
             RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
             rd.forward(request, response);
-		}
-				
-		
+        }
+    }
 
-	}
-
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException  {
-//		//テスト
-//		System.out.println("アカウント作成");
-//		//create-user.jspへの遷移		
-		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
-		rd.forward(request, response);
-	}
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // POSTリクエストの場合でもlogin.jspに遷移させる
+        RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+        rd.forward(request, response);
+    }
 }

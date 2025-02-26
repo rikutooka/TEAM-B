@@ -19,9 +19,9 @@ public class PurchaseConServlet extends HttpServlet {
         Integer quantity = parseInteger(request.getParameter("quantity"));
         Double totalPrice = parseDouble(request.getParameter("totalPrice"));
         String name = request.getParameter("name");
-        Integer postCode = parseInteger(request.getParameter("post_code"));
+        String postCode = request.getParameter("post_code");
         String address = request.getParameter("address");
-        Integer telNumber = parseInteger(request.getParameter("tel_number"));
+        String telNumber = request.getParameter("tel_number");
         String payMethod = request.getParameter("pay_method");
 
         // 取得したデータをリクエストスコープに格納
@@ -39,19 +39,19 @@ public class PurchaseConServlet extends HttpServlet {
     }
     private Integer parseInteger(String str) {
         try {
-            return (str == null || str.isEmpty()) ? null : Integer.parseInt(str);
+            return (str == null || str.isEmpty()) ? 0 : Integer.parseInt(str);
         } catch (NumberFormatException e) {
             System.err.println("NumberFormatException (Integer): " + e.getMessage());
-            return null;
+            return 0;
         }
     }
 
     private Double parseDouble(String str) {
         try {
-            return (str == null || str.isEmpty()) ? null : Double.parseDouble(str);
+            return (str == null || str.isEmpty()) ? 0.0 : Double.parseDouble(str);
         } catch (NumberFormatException e) {
             System.err.println("NumberFormatException (Double): " + e.getMessage());
-            return null;
+            return 0.0;
         }
     }
 
