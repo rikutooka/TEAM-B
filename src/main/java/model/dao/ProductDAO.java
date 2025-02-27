@@ -185,7 +185,7 @@ public class ProductDAO {
      */
     public List<String> getAllFlavors() {
     	 List<String> flavors = new ArrayList<>();
-    	 String sql = "SELECT flavor FROM m_item";
+    	 String sql = "SELECT DISTINCT flavor FROM m_item;";
     	 try (Connection con = ConnectionManager.getConnection();
                  PreparedStatement pstmt = con.prepareStatement(sql);
                  ResultSet res = pstmt.executeQuery()) {
