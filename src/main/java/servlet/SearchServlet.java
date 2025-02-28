@@ -53,7 +53,6 @@ public class SearchServlet extends HttpServlet {
         // セッションを取得し、管理者ログイン状態をチェック
         HttpSession session = request.getSession(false);
         boolean isAdminLoggedIn = (session != null && session.getAttribute("adminUser") != null);
-        
         //追加消したとこ
 
         // 遷移先を決定
