@@ -21,14 +21,23 @@ public class RegisterServlet extends HttpServlet {
         Double tar = parseDouble(request.getParameter("tar"));
         Double nicotine = parseDouble(request.getParameter("nicotine"));
         Integer price = parseInteger(request.getParameter("price"));
+        String category = request.getParameter("category");
+        String flavor = request.getParameter("flavor");
         String detail = request.getParameter("detail");
         Integer stock = parseInteger(request.getParameter("stock"));
+        
+        System.out.println("取得したカテゴリー: " + category);
+        System.out.println("取得したフレーバー: " + flavor);
+        
+        // 空文字をnullに変換
+        //category = (category != null && !category.trim().isEmpty()) ? category : null;
+        //flavor = (flavor != null && !flavor.trim().isEmpty()) ? flavor : null;
 
         // DAOを利用してDBに登録
         ProductDAO dao = new ProductDAO();
         try {
 
-			dao.insertProduct(cig_name, tar, nicotine, price, detail, stock);
+			dao.insertProduct(cig_name, tar, nicotine, price, stock, category, flavor, detail);
 			// 成功したらリスト画面へリダイレクト
             response.sendRedirect("productListMaster.jsp");
 		} catch (ClassNotFoundException | SQLException e) {

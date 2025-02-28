@@ -4,6 +4,19 @@
 <head>
 <meta charset="UTF-8">
 <title>タバコ新規登録</title>
+<style>
+    body {
+         text-align: center;
+    }
+    h2 {
+       margin-bottom: 20px;
+    }
+    table {
+          margin: 0 auto;
+    }
+    
+    
+</style>
 </head>
 <body>
     <h2>タバコ新規登録</h2>
@@ -15,12 +28,40 @@
     <% } %>
 
     <form action="RegisterServlet" method="post">
-        銘柄: <input type="text" name="cig_name" required><br>
-        タール: <input type="number" name="tar" step="0.1" required><br> <!-- 小数入力対応 -->
-        ニコチン: <input type="number" name="nicotine" step="0.1" required><br> <!-- 小数入力対応 -->
-        価格: <input type="number" name="price" required><br>
-        詳細: <input type="text" name="detail"><br>
-        在庫: <input type="number" name="stock" required><br>
+      <table>
+            <tr>
+                <td>銘柄：</td>
+                <td><input type="text" name="cig_name" required></td>
+            </tr>
+            <tr>
+                <td>タール：</td>
+                <td><input type="number" name="tar" step="0.1" required></td>
+            </tr>
+            <tr>
+                <td>ニコチン：</td>
+                <td><input type="number" name="nicotine" step="0.1" required></td>
+            </tr>
+            <tr>
+                <td>価格：</td>
+                <td><input type="number" name="price" required></td>
+            </tr>
+            <tr>
+                <td>カテゴリー：</td>
+                <td><input type="text" name="category" required></td>
+            </tr>
+            <tr>
+                <td>フレーバー：</td>
+                <td><input type="text" name="flavor" required></td>
+            </tr>
+            <tr>
+                <td>詳細：</td>
+                <td><input type="text" name="detail"></td>
+            </tr>
+            <tr>
+                <td>在庫：</td>
+                <td><input type="number" name="stock" required></td>
+            </tr>
+        </table>
         <input type="submit" value="登録">
     </form>
     

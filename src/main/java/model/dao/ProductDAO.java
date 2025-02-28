@@ -135,10 +135,10 @@ public class ProductDAO {
         }
     
     
-    public void insertProduct(String cig_name, Double tar, Double nicotine, Integer price, String detail, Integer stock) throws SQLException, ClassNotFoundException {
+    public void insertProduct(String cig_name, Double tar, Double nicotine, Integer price, Integer stock, String category, String flavor, String detail) throws SQLException, ClassNotFoundException {
         // SQL文の準備
 
-        String sql = "INSERT INTO m_item (cig_name, tar, nicotine, price, detail, stock) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO m_item (cig_name, tar, nicotine, price, stock, category, flavor, detail) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 
         // DB接続とSQLの実行準備
@@ -150,8 +150,14 @@ public class ProductDAO {
             pstmt.setDouble(2, tar);
             pstmt.setDouble(3, nicotine);
             pstmt.setInt(4, price);  
-            pstmt.setString(5, detail);
-            pstmt.setInt(6, stock);
+            pstmt.setInt(5, stock);
+            pstmt.setString(6, category);
+            pstmt.setString(7, flavor);
+            pstmt.setString(8, detail);
+            
+
+            System.out.println("DAO に渡されたカテゴリー: " + category);
+            System.out.println("DAO に渡されたフレーバー: " + flavor);
 
             // SQL文を実行
             pstmt.executeUpdate();
