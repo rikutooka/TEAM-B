@@ -65,8 +65,8 @@
         <input type="submit" value="登録">
     </form>
     
-    <form action="productListMaster.jsp" method="get">
-        <input type="submit" value="一覧へ">
+    <form action="search.jsp">
+        <input type="submit" value="TOP">
     </form>
 </body>
 </html>
